@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cinematic Scene</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #0b0c2a 0%, #000000 100%);
+    font-family: Arial, sans-serif;
+}
+
+/* Title */
+.title {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 3em;
+    letter-spacing: 5px;
+    text-shadow: 0 0 20px cyan, 0 0 40px blue;
+    animation: fadeIn 4s ease-in-out;
+}
+
+.subtitle {
+    font-size: 1.2em;
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Stars */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="space"></canvas>
+
+<div class="title">
+    ALWAYS BE CALM
+    <div class="subtitle">WORLD OF TECH</div>
+</div>
+
+<script>
+const canvas = document.getElementById("space");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+let shootingStars = [];
+
+/* Star class */
+class Star {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2;
+        this.opacity = Math.random();
+    }
+
+    draw() {
+        ctx.fillStyle = "white";
+        ctx.globalAlpha = this.opacity;
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+    }
+}
+
+/* Shooting star */
+class ShootingStar {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = 0;
+        this.len = Math.random() * 80 + 10;
+        this.speed = Math.random() * 10 + 6;
+        this.size = Math.random() * 1 + 0.5;
+    }
+
+    update() {
+        this.x += this.speed;
+        this.y += this.speed;
+    }
+
+    draw() {
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = this.size;
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x - this.len, this.y - this.len);
+        ctx.stroke();
+    }
+}
+
+/* Initialize stars */
+for (let i = 0; i < 200; i++) {
+    stars.push(new Star());
+}
+
+/* Animation */
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    stars.forEach(star => star.draw());
+
+    if (Math.random() < 0.02) {
+        shootingStars.push(new ShootingStar());
+    }
+
+    shootingStars.forEach((s, i) => {
+        s.update();
+        s.draw();
+
+        if (s.y > canvas.height) {
+            shootingStars.splice(i, 1);
+        }
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+/* Resize */
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
