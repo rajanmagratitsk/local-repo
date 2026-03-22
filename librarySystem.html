@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Library System</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: #0f172a;
+        color: white;
+    }
+
+    /* HEADER */
+    .header {
+        background: linear-gradient(135deg, #6366f1, #06b6d4);
+        text-align: center;
+        padding: 50px;
+        position: relative;
+    }
+
+    svg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    /* CONTAINER */
+    .container {
+        padding: 40px;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    /* FORM */
+    .form-box {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 6px;
+        background: #334155;
+        color: white;
+    }
+
+    button {
+        padding: 10px 20px;
+        border: none;
+        background: #6366f1;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #4f46e5;
+    }
+
+    /* TABLE */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #1e293b;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background: #6366f1;
+    }
+
+    tr:nth-child(even) {
+        background: #334155;
+    }
+
+    .delete-btn {
+        background: #ef4444;
+    }
+
+    .delete-btn:hover {
+        background: #dc2626;
+    }
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>📚 Library Management System</h1>
+
+    <svg viewBox="0 0 1440 320">
+        <path fill="#0f172a"
+        d="M0,224L80,192C160,160,320,96,480,96C640,96,800,160,960,170.7C1120,181,1280,139,1360,117.3L1440,96V320H0Z">
+        </path>
+    </svg>
+</div>
+
+<div class="container">
+
+    <!-- FORM -->
+    <div class="form-box">
+        <h2>Add Book</h2>
+        <input type="text" id="title" placeholder="Book Title">
+        <input type="text" id="author" placeholder="Author">
+        <input type="text" id="id" placeholder="Book ID">
+        <button onclick="addBook()">Add Book</button>
+    </div>
+
+    <!-- TABLE -->
+    <h2>Book List</h2>
+    <table id="bookTable">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ID</th>
+            <th>Action</th>
+        </tr>
+    </table>
+
+</div>
+
+<script>
+function addBook() {
+    let title = document.getElementById("title").value;
+    let author = document.getElementById("author").value;
+    let id = document.getElementById("id").value;
+
+    if (title === "" || author === "" || id === "") {
+        alert("Fill all fields!");
+        return;
+    }
+
+    let table = document.getElementById("bookTable");
+
+    let row = table.insertRow();
+
+    row.insertCell(0).innerText = title;
+    row.insertCell(1).innerText = author;
+    row.insertCell(2).innerText = id;
+
+    let actionCell = row.insertCell(3);
+    let delBtn = document.createElement("button");
+    delBtn.innerText = "Delete";
+    delBtn.className = "delete-btn";
+
+    delBtn.onclick = function() {
+        table.deleteRow(row.rowIndex);
+    };
+
+    actionCell.appendChild(delBtn);
+
+    // clear inputs
+    document.getElementById("title").value = "";
+    document.getElementById("author").value = "";
+    document.getElementById("id").value = "";
+}
+</script>
+
+</body>
+</html>
