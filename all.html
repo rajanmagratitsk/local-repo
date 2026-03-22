@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wave UI Table & List</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: #0f172a;
+        color: white;
+    }
+
+    /* ===== HEADER WITH WAVE ===== */
+    .header {
+        position: relative;
+        background: linear-gradient(135deg, #6366f1, #06b6d4);
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    .header h1 {
+        margin: 0;
+        font-size: 40px;
+    }
+
+    svg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    /* ===== CONTENT ===== */
+    .container {
+        padding: 40px;
+    }
+
+    /* ===== TABLE ===== */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+        background: #1e293b;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+    }
+
+    th {
+        background: #6366f1;
+    }
+
+    tr:nth-child(even) {
+        background: #334155;
+    }
+
+    tr:hover {
+        background: #475569;
+        transition: 0.3s;
+    }
+
+    /* ===== LIST ===== */
+    .list-box {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .list-box ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .list-box li {
+        padding: 10px;
+        margin: 8px 0;
+        background: #334155;
+        border-radius: 6px;
+        transition: 0.3s;
+    }
+
+    .list-box li:hover {
+        background: #6366f1;
+        transform: translateX(10px);
+    }
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>Modern UI Dashboard</h1>
+
+    <!-- WAVE -->
+    <svg viewBox="0 0 1440 320">
+        <path fill="#0f172a" fill-opacity="1"
+        d="M0,224L80,192C160,160,320,96,480,96C640,96,800,160,960,170.7C1120,181,1280,139,1360,117.3L1440,96V320H0Z">
+        </path>
+    </svg>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <!-- TABLE -->
+    <h2>Student Table</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Course</th>
+            <th>Level</th>
+        </tr>
+        <tr>
+            <td>Rajan</td>
+            <td>BCA</td>
+            <td>Semester 2</td>
+        </tr>
+        <tr>
+            <td>Arjun</td>
+            <td>CSIT</td>
+            <td>Semester 3</td>
+        </tr>
+        <tr>
+            <td>Sita</td>
+            <td>BBA</td>
+            <td>Semester 1</td>
+        </tr>
+    </table>
+
+    <!-- LIST -->
+    <h2>Features List</h2>
+    <div class="list-box">
+        <ul>
+            <li>✔ Modern UI Design</li>
+            <li>✔ Smooth Hover Effects</li>
+            <li>✔ Responsive Layout</li>
+            <li>✔ Clean Table Structure</li>
+            <li>✔ Stylish Animated List</li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>
