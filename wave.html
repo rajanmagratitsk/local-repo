@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Liquid Neon World</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f2027;
+}
+
+/* Canvas */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Glass Card */
+.card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    color: white;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 40px rgba(0,255,255,0.4);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 0 80px rgba(0,255,255,0.9);
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+p {
+    opacity: 0.8;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 30px;
+    background: cyan;
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: white;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="wave"></canvas>
+
+<div class="card">
+    <h1>Rajan 💙</h1>
+    <p>You are something special</p>
+    <button onclick="magic()">Touch Me ✨</button>
+</div>
+
+<script>
+const canvas = document.getElementById("wave");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let t = 0;
+
+/* Liquid Wave Animation */
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height / 2);
+
+        for (let x = 0; x < canvas.width; x++) {
+            let y = Math.sin(x * 0.01 + t + i) * 40 + canvas.height / 2;
+            ctx.lineTo(x, y);
+        }
+
+        ctx.strokeStyle = `rgba(0,255,255,${0.3 - i*0.1})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
+
+    t += 0.03;
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+/* Button Magic */
+function magic() {
+    document.body.style.background = "black";
+    alert("You make my world glow 💙");
+}
+
+/* Resize */
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
