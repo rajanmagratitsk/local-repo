@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Modern UI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0a0f;
+    color: white;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: cyan;
+}
+
+.menu a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    color: cyan;
+}
+
+/* Hero Section */
+.hero {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    background: radial-gradient(circle at center, #111 0%, #000 100%);
+}
+
+.hero h1 {
+    font-size: 3em;
+    background: linear-gradient(90deg, cyan, purple);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    opacity: 0.7;
+}
+
+/* Button */
+.btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(90deg, cyan, purple);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+/* Cards */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 15px;
+    width: 200px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px cyan;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo">RajanUI</div>
+    <div class="menu">
+        <a href="#">Home</a>
+        <a href="#">Features</a>
+        <a href="#">Contact</a>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>Build Something Clean</h1>
+    <p>Modern design. Smooth experience.</p>
+    <button class="btn" onclick="clickMe()">Get Started</button>
+</div>
+
+<div class="cards">
+    <div class="card">⚡ Fast</div>
+    <div class="card">🎨 Stylish</div>
+    <div class="card">🚀 Powerful</div>
+</div>
+
+<script>
+function clickMe() {
+    alert("Welcome to your stylish UI 🚀");
+}
+</script>
+
+</body>
+</html>
