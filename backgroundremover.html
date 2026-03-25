@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Background Remover</title>
+<style>
+    body {
+        font-family: Arial;
+        text-align: center;
+        background: #f0f0f0;
+        padding: 50px;
+    }
+
+    .box {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 320px;
+        margin: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    input, button {
+        margin: 10px;
+        padding: 10px;
+        width: 90%;
+    }
+
+    button {
+        background: #2196F3;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    canvas {
+        margin-top: 10px;
+        max-width: 100%;
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Background Remover</h2>
+
+    <input type="file" id="upload" accept="image/*">
+
+    <button onclick="removeBG()">Remove Background</button>
+
+    <canvas id="canvas"></canvas>
+
+    <a id="downloadLink" style="display:none;">Download Image</a>
+</div>
+
+<script>
+function removeBG() {
+    const file = document.getElementById("upload").files[0];
+
+    if (!file) {
+        alert("Select an image first!");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        const img = new Image();
+        img.src = event.target.result;
+
+        img.onload = function() {
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.drawImage(img, 0, 0);
+
+            let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                let r = data[i];
+                let g = data[i + 1];
+                let b = data[i + 2];
+
+                // Remove white/light background
+                if (r > 200 && g > 200 && b > 200) {
+                    data[i + 3] = 0; // make transparent
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+
+            const link = document.getElementById("downloadLink");
+            link.href = canvas.toDataURL("image/png");
+            link.download = "no-background.png";
+            link.innerText = "Download Image";
+            link.style.display = "block";
+        };
+    };
+
+    reader.readAsDataURL(file);
+}
+</script>
+
+</body>
+</html>
