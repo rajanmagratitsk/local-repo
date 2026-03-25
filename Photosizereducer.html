@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Photo Size Reducer</title>
+<style>
+    body {
+        font-family: Arial;
+        text-align: center;
+        background: #f2f2f2;
+        padding: 50px;
+    }
+
+    .box {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 300px;
+        margin: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    input, button {
+        margin: 10px;
+        padding: 10px;
+        width: 90%;
+    }
+
+    button {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #45a049;
+    }
+
+    img {
+        margin-top: 10px;
+        max-width: 100%;
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Photo Size Reducer</h2>
+
+    <input type="file" id="upload" accept="image/*">
+
+    <label>Quality (0.1 - 1):</label>
+    <input type="number" id="quality" step="0.1" value="0.5" min="0.1" max="1">
+
+    <button onclick="compressImage()">Compress</button>
+
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <a id="downloadLink" style="display:none;">Download Image</a>
+
+    <img id="preview">
+</div>
+
+<script>
+function compressImage() {
+    const file = document.getElementById("upload").files[0];
+    const quality = parseFloat(document.getElementById("quality").value);
+
+    if (!file) {
+        alert("Select an image first!");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        const img = new Image();
+        img.src = event.target.result;
+
+        img.onload = function() {
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.drawImage(img, 0, 0);
+
+            const compressed = canvas.toDataURL("image/jpeg", quality);
+
+            document.getElementById("preview").src = compressed;
+
+            const link = document.getElementById("downloadLink");
+            link.href = compressed;
+            link.download = "compressed.jpg";
+            link.innerText = "Download Image";
+            link.style.display = "block";
+        };
+    };
+
+    reader.readAsDataURL(file);
+}
+</script>
+
+</body>
+</html>
