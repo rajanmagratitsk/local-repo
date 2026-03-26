@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title> Climate | Weather & Time Aura</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Poppins', 'Inter', system-ui, -apple-system, 'BlinkMacSystemFont', 'Roboto', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 10% 30%, rgba(15, 25, 45, 1) 0%, rgba(8, 15, 28, 1) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    /* animated glassmorphic orbs */
+    body::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 140, 100, 0.25), rgba(255, 80, 120, 0.05));
+      border-radius: 50%;
+      top: 5%;
+      left: -5%;
+      filter: blur(70px);
+      z-index: 0;
+      animation: floatGlow 14s infinite alternate ease-in-out;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(80, 180, 255, 0.2), rgba(40, 100, 200, 0.02));
+      border-radius: 50%;
+      bottom: -10%;
+      right: -10%;
+      filter: blur(90px);
+      z-index: 0;
+      animation: floatGlow2 18s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+      100% { transform: translate(40px, 40px) scale(1.2); opacity: 0.8; }
+    }
+
+    @keyframes floatGlow2 {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+      100% { transform: translate(-30px, -50px) scale(1.25); opacity: 0.7; }
+    }
+
+    /* main card */
+    .weather-card {
+      position: relative;
+      z-index: 10;
+      max-width: 560px;
+      width: 100%;
+      background: rgba(25, 35, 55, 0.55);
+      backdrop-filter: blur(14px);
+      border-radius: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(255, 255, 255, 0.08) inset;
+      padding: 1.8rem 2rem 2.2rem;
+      transition: all 0.3s ease;
+    }
+
+    /* search section */
+    .search-section {
+      display: flex;
+      gap: 0.7rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .search-wrapper {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(220, 240, 255, 0.7);
+      font-size: 1.2rem;
+      pointer-events: none;
+    }
+
+    #cityInput {
+      width: 100%;
+      background: rgba(15, 25, 40, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.9rem 1rem 0.9rem 3rem;
+      font-size: 1rem;
+      border-radius: 60px;
+      color: #f0f3fa;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    #cityInput:focus {
+      border-color: #7aa9ff;
+      background: rgba(20, 32, 50, 0.85);
+      box-shadow: 0 0 12px rgba(100, 160, 255, 0.3);
+    }
+
+    #cityInput::placeholder {
+      color: #b0c4deaa;
+      font-weight: 400;
+    }
+
+    button {
+      background: linear-gradient(125deg, #3a6ea5, #2c5282);
+      border: none;
+      border-radius: 60px;
+      padding: 0 1.6rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      color: white;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+      transform: scale(0.97);
+      background: linear-gradient(125deg, #4f7fb0, #3865a0);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* main info */
+    .location-date {
+      text-align: center;
+      margin-bottom: 1.2rem;
+    }
+
+    #placeName {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFFFFF, #c0e0ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .country-badge {
+      font-size: 0.9rem;
+      background: rgba(255,255,240,0.2);
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-weight: 500;
+      color: #eef5ff;
+    }
+
+    .time-display {
+      font-size: 2.8rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      letter-spacing: 2px;
+      background: linear-gradient(145deg, #e9f2ff, #cbdff5);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin: 0.5rem 0 0.2rem;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .date-full {
+      color: #bcd0f0;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      font-size: 1rem;
+      border-top: 1px dashed rgba(255,255,255,0.2);
+      display: inline-block;
+      padding-top: 8px;
+    }
+
+    /* weather panel */
+    .weather-panel {
+      background: rgba(10, 20, 35, 0.5);
+      border-radius: 2rem;
+      padding: 1.3rem 1.5rem;
+      margin: 1.5rem 0;
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .temp-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .temp-value {
+      font-size: 3.4rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .temp-unit {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #bbd9ff;
+    }
+
+    .weather-icon {
+      width: 70px;
+      height: 70px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    .condition-details {
+      text-align: right;
+    }
+
+    .condition-text {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #f2f6ff;
+      text-transform: capitalize;
+    }
+
+    .feels-like {
+      font-size: 0.85rem;
+      color: #b8d0fc;
+      margin-top: 6px;
+    }
+
+    /* extra stats row */
+    .stats-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 0.6rem;
+    }
+
+    .stat-card {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px);
+      flex: 1;
+      border-radius: 1.6rem;
+      padding: 0.8rem 0.5rem;
+      text-align: center;
+      border: 1px solid rgba(255,255,210,0.1);
+      transition: all 0.2s;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #b8ceff;
+    }
+
+    .stat-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 5px;
+      color: #f0f5ff;
+    }
+
+    /* loading + error */
+    .loader {
+      text-align: center;
+      padding: 1rem;
+      color: #d9e6ff;
+    }
+
+    .error-message {
+      background: rgba(220, 70, 90, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      padding: 0.9rem;
+      text-align: center;
+      margin-top: 1rem;
+      color: #ffc9cf;
+      font-weight: 500;
+      border-left: 4px solid #ff7b89;
+    }
+
+    /* footer note */
+    .footnote {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1.8rem;
+      color: #8ba3c7;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 500px) {
+      .weather-card {
+        padding: 1.2rem;
+      }
+      .temp-value {
+        font-size: 2.6rem;
+      }
+      .time-display {
+        font-size: 2rem;
+      }
+      #placeName {
+        font-size: 1.6rem;
+      }
+      .weather-icon {
+        width: 55px;
+        height: 55px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="weather-card" id="weatherCard">
+  <div class="search-section">
+    <div class="search-wrapper">
+      <span class="search-icon">📍</span>
+      <input type="text" id="cityInput" placeholder="City name... e.g., London, Tokyo, New York, Paris" value="Kathmandu">
+    </div>
+    <button id="searchBtn">🔍 Get Climate</button>
+  </div>
+
+  <div id="contentContainer">
+    <!-- dynamic content will be injected -->
+    <div class="loader" id="loaderState">✨ Breathe in... fetching atmospheric vibes ✨</div>
+  </div>
+  <div class="footnote">✦ real-time weather & local time ✦ powered by open-meteo & timezonedb ✦</div>
+</div>
+
+<script>
+  // ---------- DOM Elements ----------
+  const cityInput = document.getElementById('cityInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const contentContainer = document.getElementById('contentContainer');
+
+  // ---------- Helper: fetch city coordinates using Open-Meteo Geocoding (free, no API key) ----------
+  async function fetchCoordinates(cityName) {
+    const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`;
+    const response = await fetch(geoUrl);
+    const data = await response.json();
+    if (!data.results || data.results.length === 0) {
+      throw new Error(`Location "${cityName}" not found. Try another city name.`);
+    }
+    const result = data.results[0];
+    return {
+      name: result.name,
+      country: result.country,
+      latitude: result.latitude,
+      longitude: result.longitude,
+      timezone: result.timezone  // timezone name from geocoding (like "Asia/Tokyo")
+    };
+  }
+
+  // ---------- fetch weather data from Open-Meteo (current temp, feels like, humidity, wind, weathercode) ----------
+  async function fetchWeather(lat, lon) {
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,apparent_temperature&windspeed=10m&timezone=auto`;
+    const resp = await fetch(weatherUrl);
+    const data = await resp.json();
+    if (!data.current_weather) throw new Error('Weather data unavailable');
+    const current = data.current_weather;
+    // get humidity from hourly (nearest index)
+    let humidity = null;
+    let apparentTemp = null;
+    if (data.hourly && data.hourly.time && data.current_weather.time) {
+      const currentTime = new Date(data.current_weather.time).getTime();
+      let bestIdx = 0;
+      let minDiff = Infinity;
+      for (let i = 0; i < data.hourly.time.length; i++) {
+        const hourTime = new Date(data.hourly.time[i]).getTime();
+        const diff = Math.abs(hourTime - currentTime);
+        if (diff < minDiff) {
+          minDiff = diff;
+          bestIdx = i;
+        }
+      }
+      if (data.hourly.relativehumidity_2m && data.hourly.relativehumidity_2m[bestIdx] !== undefined) {
+        humidity = data.hourly.relativehumidity_2m[bestIdx];
+      }
+      if (data.hourly.apparent_temperature && data.hourly.apparent_temperature[bestIdx] !== undefined) {
+        apparentTemp = data.hourly.apparent_temperature[bestIdx];
+      }
+    }
+    return {
+      temperature: current.temperature,
+      windspeed: current.windspeed,
+      weathercode: current.weathercode,
+      humidity: humidity,
+      feels_like: apparentTemp
+    };
+  }
+
+  // Weather code mapping to icon & description (WMO codes)
+  function getWeatherInterpretation(code) {
+    // codes: 0 clear, 1-3 partly cloudy, 45/48 fog, 51-67 drizzle/rain, 71-77 snow, 80-99 thunder/rain
+    const mapping = {
+      0: { text: "Clear Sky", icon: "☀️" },
+      1: { text: "Mainly Clear", icon: "🌤️" },
+      2: { text: "Partly Cloudy", icon: "⛅" },
+      3: { text: "Overcast", icon: "☁️" },
+      45: { text: "Fog", icon: "🌫️" },
+      48: { text: "Rime Fog", icon: "🌫️" },
+      51: { text: "Light Drizzle", icon: "🌦️" },
+      53: { text: "Moderate Drizzle", icon: "🌧️" },
+      55: { text: "Dense Drizzle", icon: "🌧️" },
+      56: { text: "Freezing Drizzle", icon: "❄️🌧️" },
+      57: { text: "Heavy Freezing Drizzle", icon: "❄️🌧️" },
+      61: { text: "Light Rain", icon: "🌦️" },
+      63: { text: "Moderate Rain", icon: "🌧️" },
+      65: { text: "Heavy Rain", icon: "🌧️💧" },
+      66: { text: "Freezing Rain", icon: "❄️🌧️" },
+      67: { text: "Heavy Freezing Rain", icon: "❄️🌧️" },
+      71: { text: "Light Snow", icon: "🌨️" },
+      73: { text: "Moderate Snow", icon: "❄️🌨️" },
+      75: { text: "Heavy Snow", icon: "❄️❄️" },
+      77: { text: "Snow Grains", icon: "🌨️" },
+      80: { text: "Slight Rain Showers", icon: "☔" },
+      81: { text: "Moderate Showers", icon: "☔🌧️" },
+      82: { text: "Violent Showers", icon: "⛈️" },
+      85: { text: "Snow Showers", icon: "🌨️" },
+      86: { text: "Heavy Snow Showers", icon: "❄️⛈️" },
+      95: { text: "Thunderstorm", icon: "⛈️" },
+      96: { text: "Thunderstorm + Hail", icon: "⛈️🌨️" },
+      99: { text: "Violent Thunderstorm", icon: "🌩️" }
+    };
+    return mapping[code] || { text: "Variable", icon: "🌍" };
+  }
+
+  // ---------- get current time based on timezone string ----------
+  function getFormattedTimeAndDate(timezoneStr) {
+    try {
+      const now = new Date();
+      // build localized string using Intl.DateTimeFormat with timezone
+      const timeFormatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: timezoneStr,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+      const dateFormatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: timezoneStr,
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      const timeString = timeFormatter.format(now);
+      const dateString = dateFormatter.format(now);
+      return { time: timeString, date: dateString };
+    } catch (err) {
+      // fallback if timezone string invalid (rare)
+      return { time: new Date().toLocaleTimeString(), date: new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) };
+    }
+  }
+
+  // update realtime clock (every second) but we will also refresh whole UI with new time each second
+  let clockInterval = null;
+
+  function renderUI(geoData, weatherData, timeData, timezoneId) {
+    const weatherIconObj = getWeatherInterpretation(weatherData.weathercode);
+    const feelsLikeVal = weatherData.feels_like !== null ? `${Math.round(weatherData.feels_like)}°C` : '—';
+    const humidityVal = weatherData.humidity !== null ? `${weatherData.humidity}%` : '—';
+    const windVal = `${Math.round(weatherData.windspeed)} km/h`;
+    const tempC = Math.round(weatherData.temperature);
+
+    return `
+      <div class="location-date">
+        <div id="placeName">
+          ${geoData.name} <span class="country-badge">${geoData.country}</span>
+        </div>
+        <div class="time-display" id="liveClock">${timeData.time}</div>
+        <div class="date-full">${timeData.date}</div>
+      </div>
+      <div class="weather-panel">
+        <div class="temp-block">
+          <span class="temp-value">${tempC}</span>
+          <span class="temp-unit">°C</span>
+          <div class="weather-icon" style="font-size: 3.2rem;">${weatherIconObj.icon}</div>
+        </div>
+        <div class="condition-details">
+          <div class="condition-text">${weatherIconObj.text}</div>
+          <div class="feels-like">Feels like ${feelsLikeVal}</div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">💧 HUMIDITY</div>
+          <div class="stat-value">${humidityVal}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">🌬️ WIND</div>
+          <div class="stat-value">${windVal}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">🌡️ FEELS</div>
+          <div class="stat-value">${feelsLikeVal}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  // main function to load data for city name
+  async function loadWeatherForCity(cityName) {
+    if (!cityName || cityName.trim() === "") {
+      showError("✨ Please enter a city name ✨");
+      return;
+    }
+    // show loading skeleton
+    contentContainer.innerHTML = `<div class="loader" id="loaderState">🔭 Locating ${escapeHtml(cityName)} ... fetching cosmic weather 🔭</div>`;
+    
+    try {
+      // step 1: get coordinates + timezone
+      const geo = await fetchCoordinates(cityName.trim());
+      // step 2: get weather data
+      const weather = await fetchWeather(geo.latitude, geo.longitude);
+      // step 3: initial time render based on timezone
+      let timeInfo = getFormattedTimeAndDate(geo.timezone);
+      
+      // clear previous clock interval if exists
+      if (clockInterval) clearInterval(clockInterval);
+      
+      // build initial UI
+      const initialHtml = renderUI(geo, weather, timeInfo, geo.timezone);
+      contentContainer.innerHTML = initialHtml;
+      
+      // get reference to clock element to update every second
+      const clockElement = document.getElementById('liveClock');
+      // start real-time clock ticking for this specific timezone
+      clockInterval = setInterval(() => {
+        if (clockElement) {
+          const freshTime = getFormattedTimeAndDate(geo.timezone);
+          clockElement.innerText = freshTime.time;
+          // also update the date element if date changes? but we can do minimal: update full date once per minute? not needed but smooth
+          const dateDiv = document.querySelector('.date-full');
+          if (dateDiv && freshTime.date !== dateDiv.innerText) {
+            dateDiv.innerText = freshTime.date;
+          }
+        } else {
+          // if clock element disappears because UI re-render, we clear interval in next load
+          if (clockInterval) clearInterval(clockInterval);
+        }
+      }, 1000);
+      
+    } catch (err) {
+      console.error(err);
+      showError(err.message || "Unable to fetch data. Check city name or network.");
+      if (clockInterval) clearInterval(clockInterval);
+    }
+  }
+  
+  function showError(msg) {
+    contentContainer.innerHTML = `<div class="error-message">⚠️ ${escapeHtml(msg)} ⚠️</div><div class="loader" style="margin-top:1rem;">try another city, like "Berlin", "Sydney", "Delhi"</div>`;
+  }
+  
+  // simple escape for safety
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+  
+  // search event
+  function performSearch() {
+    const city = cityInput.value.trim();
+    if (city === "") {
+      showError("Please enter a city name 🌍");
+      return;
+    }
+    loadWeatherForCity(city);
+  }
+  
+  searchBtn.addEventListener('click', performSearch);
+  cityInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') performSearch();
+  });
+  
+  // initial load with default "Kathmandu"
+  loadWeatherForCity("Kathmandu");
+  
+  // optional: clear interval on page unload to be safe
+  window.addEventListener('beforeunload', () => {
+    if (clockInterval) clearInterval(clockInterval);
+  });
+</script>
+</body>
+</html>
