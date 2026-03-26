@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MathLab | SciCalc</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, monospace;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .calc-card {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(15, 25, 45, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .display {
+            background: #0a0f1c;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-align: right;
+            word-wrap: break-word;
+            word-break: break-all;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .expression {
+            color: #8ca3c7;
+            font-size: 0.9rem;
+            min-height: 28px;
+            letter-spacing: 0.5px;
+        }
+
+        .result {
+            color: #f0f9ff;
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            word-break: break-word;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.7rem;
+        }
+
+        button {
+            background: rgba(30, 41, 59, 0.7);
+            border: none;
+            padding: 1rem 0;
+            border-radius: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.15s;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: scale(0.94);
+            background: #3b4b6e;
+        }
+
+        .btn-func {
+            background: #2d3a5e;
+            color: #bbd9ff;
+            font-size: 0.9rem;
+        }
+
+        .btn-equal {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .btn-clear {
+            background: #991b1bdd;
+            color: #ffc9c9;
+        }
+
+        .btn-special {
+            background: #1e2a47;
+            color: #facc15;
+        }
+
+        @media (max-width: 480px) {
+            .buttons { gap: 0.5rem; }
+            button { padding: 0.75rem 0; font-size: 0.9rem; }
+            .result { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="calc-card">
+    <div class="display">
+        <div class="expression" id="exprDisplay"></div>
+        <div class="result" id="resultDisplay">0</div>
+    </div>
+    <div class="buttons">
+        <button class="btn-clear" onclick="clearAll()">AC</button>
+        <button class="btn-func" onclick="deleteLast()">⌫</button>
+        <button class="btn-func" onclick="addOp('(')">(</button>
+        <button class="btn-func" onclick="addOp(')')">)</button>
+        <button class="btn-func" onclick="addOp('/')">÷</button>
+
+        <button onclick="addNum('7')">7</button>
+        <button onclick="addNum('8')">8</button>
+        <button onclick="addNum('9')">9</button>
+        <button class="btn-func" onclick="addOp('*')">×</button>
+        <button class="btn-func" onclick="addOp('-')">−</button>
+
+        <button onclick="addNum('4')">4</button>
+        <button onclick="addNum('5')">5</button>
+        <button onclick="addNum('6')">6</button>
+        <button class="btn-func" onclick="addOp('+')">+</button>
+        <button class="btn-special" onclick="applyFunc('fact')">n!</button>
+
+        <button onclick="addNum('1')">1</button>
+        <button onclick="addNum('2')">2</button>
+        <button onclick="addNum('3')">3</button>
+        <button class="btn-special" onclick="applyFunc('pow2')">x²</button>
+        <button class="btn-special" onclick="applyFunc('sqrt')">√</button>
+
+        <button onclick="addNum('0')">0</button>
+        <button onclick="addDot()">.</button>
+        <button class="btn-equal" onclick="calculate()">=</button>
+        <button class="btn-special" onclick="applyFunc('pow')">xʸ</button>
+        <button class="btn-special" onclick="applyFunc('mod')">mod</button>
+    </div>
+    <div style="font-size: 0.7rem; text-align: center; margin-top: 1rem; color:#5b7a9a;">⚡ factorial | powers | sqrt | mod ⚡</div>
+</div>
+
+<script>
+    let currentExpr = "";      // stores expression string
+    let lastResult = null;
+    const exprSpan = document.getElementById("exprDisplay");
+    const resSpan = document.getElementById("resultDisplay");
+
+    function updateDisplay() {
+        exprSpan.innerText = currentExpr || " ";
+        // if result not empty show it
+    }
+
+    function addNum(num) {
+        currentExpr += num;
+        updateDisplay();
+        // optional: clear result preview
+        resSpan.innerText = "=";
+    }
+
+    function addOp(op) {
+        if (currentExpr === "" && op === '-' && lastResult !== null) {
+            // allow negative start using last result? better reset
+            currentExpr = "";
+        }
+        // avoid double operators
+        const lastChar = currentExpr.slice(-1);
+        if (["+", "-", "*", "/", "(", "×", "÷", "−"].includes(lastChar) && ["+", "-", "*", "/", "×", "÷", "−"].includes(op)) {
+            // replace last operator
+            currentExpr = currentExpr.slice(0, -1) + mapOp(op);
+        } else {
+            currentExpr += mapOp(op);
+        }
+        updateDisplay();
+        resSpan.innerText = "=";
+    }
+
+    function mapOp(op) {
+        if (op === '×') return '*';
+        if (op === '÷') return '/';
+        if (op === '−') return '-';
+        return op;
+    }
+
+    function addDot() {
+        const parts = currentExpr.split(/[\+\-\*\/\(\)\^%]/);
+        const lastPart = parts[parts.length - 1];
+        if (!lastPart.includes('.')) {
+            currentExpr += '.';
+            updateDisplay();
+        }
+    }
+
+    function deleteLast() {
+        currentExpr = currentExpr.slice(0, -1);
+        updateDisplay();
+        if (currentExpr === "") resSpan.innerText = "0";
+        else resSpan.innerText = "=";
+    }
+
+    function clearAll() {
+        currentExpr = "";
+        lastResult = null;
+        updateDisplay();
+        resSpan.innerText = "0";
+    }
+
+    // ---------- MATH UTILS ----------
+    function factorial(n) {
+        if (n < 0) return NaN;
+        if (n === 0 || n === 1) return 1;
+        let f = 1;
+        for (let i = 2; i <= n; i++) f *= i;
+        return f;
+    }
+
+    // evaluate safe expression
+    function evaluateExpression(expr) {
+        // replace ^ with ** for exponentiation
+        let processed = expr.replace(/\^/g, '**');
+        // handle mod: replace 'mod' with % but careful about numbers
+        // we need to replace "mod" surrounded by numbers/whitespace
+        processed = processed.replace(/\s*mod\s*/gi, '%');
+        // validate characters
+        if (!/^[\d\s\+\-\*\/\(\)\%\*\^\.\s]+$/.test(processed) && !processed.includes('**')) {
+            // allow ** from ^ replacement
+            if (!/^[\d\s\+\-\*\/\(\)\%\*\^\.\s]+$/.test(processed.replace(/\*\*/g, '^'))) {
+                throw new Error("Invalid chars");
+            }
+        }
+        // use Function constructor for safe eval (better than eval but still restricted)
+        const fn = new Function('return (' + processed + ')');
+        let val = fn();
+        if (isNaN(val) || !isFinite(val)) throw new Error("Math Error");
+        return val;
+    }
+
+    function calculate() {
+        if (!currentExpr.trim()) {
+            if (lastResult !== null) {
+                currentExpr = String(lastResult);
+                updateDisplay();
+            }
+            return;
+        }
+        try {
+            let exprToEval = currentExpr;
+            // replace factorial notation: n! where n is number or expression in parentheses
+            exprToEval = exprToEval.replace(/(\d+(?:\.\d+)?|\([^()]*\))\s*!/g, (match, numGroup) => {
+                let numVal;
+                if (numGroup.startsWith('(') && numGroup.endsWith(')')) {
+                    // evaluate inner expression first
+                    const inner = numGroup.slice(1, -1);
+                    const innerResult = evaluateExpression(inner);
+                    numVal = innerResult;
+                } else {
+                    numVal = parseFloat(numGroup);
+                }
+                if (isNaN(numVal) || !Number.isInteger(numVal) || numVal < 0) throw new Error("Factorial: non-negative integer required");
+                return factorial(Math.floor(numVal));
+            });
+            // also handle factorial on variables from previous steps
+            let result = evaluateExpression(exprToEval);
+            // round for nicer display
+            if (Math.abs(result) > 1e12) {
+                result = result.toExponential(6);
+            } else if (Number.isInteger(result)) {
+                result = result;
+            } else {
+                result = parseFloat(result.toFixed(8));
+            }
+            resSpan.innerText = result;
+            lastResult = result;
+            // optional: keep expression but show result
+        } catch (err) {
+            resSpan.innerText = "Error";
+            setTimeout(() => { if (resSpan.innerText === "Error") resSpan.innerText = "="; }, 1200);
+        }
+    }
+
+    // apply special functions (factorial, square, sqrt, power, mod)
+    function applyFunc(func) {
+        if (func === 'fact') {
+            // get last number or selected? we'll insert "!" after the last number or parentheses
+            if (currentExpr === "") {
+                if (lastResult !== null && lastResult !== undefined && !isNaN(lastResult)) {
+                    currentExpr = String(lastResult);
+                } else {
+                    currentExpr = "0";
+                }
+            }
+            // find trailing number or parentheses expression
+            const match = currentExpr.match(/(\d+(?:\.\d+)?|\([^()]*\))$/);
+            if (match) {
+                currentExpr = currentExpr.slice(0, -match[0].length) + match[0] + "!";
+            } else {
+                currentExpr += "!";
+            }
+            updateDisplay();
+            resSpan.innerText = "=";
+        }
+        else if (func === 'pow2') {
+            if (currentExpr === "") {
+                if (lastResult !== null) currentExpr = String(lastResult);
+                else currentExpr = "0";
+            }
+            currentExpr = `(${currentExpr})^2`;
+            updateDisplay();
+            resSpan.innerText = "=";
+        }
+        else if (func === 'sqrt') {
+            if (currentExpr === "") {
+                if (lastResult !== null) currentExpr = String(lastResult);
+                else currentExpr = "0";
+            }
+            currentExpr = `sqrt(${currentExpr})`;
+            updateDisplay();
+            resSpan.innerText = "=";
+        }
+        else if (func === 'pow') {
+            // add ^ symbol to allow exponent
+            currentExpr += "^";
+            updateDisplay();
+            resSpan.innerText = "=";
+        }
+        else if (func === 'mod') {
+            currentExpr += " mod ";
+            updateDisplay();
+            resSpan.innerText = "=";
+        }
+    }
+
+    // extra: sqrt parser (handle sqrt)
+    function handleSqrtInExpr() {
+        // overwritten later in evaluate but we also allow sqrt in calculation
+    }
+
+    // override evaluate to support sqrt() built-in
+    const originalEval = evaluateExpression;
+    window.evaluateExpression = function(expr) {
+        // convert sqrt( to Math.sqrt(
+        let processed = expr.replace(/sqrt\(/gi, 'Math.sqrt(');
+        // also replace ^ with ** if exists (already in main eval but ensure)
+        processed = processed.replace(/\^/g, '**');
+        processed = processed.replace(/\s*mod\s*/gi, '%');
+        const fn = new Function('return (' + processed + ')');
+        let val = fn();
+        if (isNaN(val) || !isFinite(val)) throw new Error("Math Error");
+        return val;
+    }.bind(this);
+
+    // patch the calculate function to use new sqrt evaluation
+    const superCalculate = calculate;
+    window.calculate = function() {
+        if (!currentExpr.trim()) {
+            if (lastResult !== null) {
+                currentExpr = String(lastResult);
+                updateDisplay();
+            }
+            return;
+        }
+        try {
+            let exprToEval = currentExpr;
+            // factorial preprocessing
+            exprToEval = exprToEval.replace(/(\d+(?:\.\d+)?|\([^()]*\))\s*!/g, (match, numGroup) => {
+                let numVal;
+                if (numGroup.startsWith('(') && numGroup.endsWith(')')) {
+                    const inner = numGroup.slice(1, -1);
+                    const innerResult = window.evaluateExpression(inner);
+                    numVal = innerResult;
+                } else {
+                    numVal = parseFloat(numGroup);
+                }
+                if (isNaN(numVal) || !Number.isInteger(numVal) || numVal < 0) throw new Error("Factorial error");
+                let f = 1;
+                for (let i = 2; i <= numVal; i++) f *= i;
+                return f;
+            });
+            // handle sqrt
+            let finalExpr = exprToEval.replace(/sqrt\(/gi, 'Math.sqrt(');
+            finalExpr = finalExpr.replace(/\^/g, '**');
+            finalExpr = finalExpr.replace(/\s*mod\s*/gi, '%');
+            const fn = new Function('return (' + finalExpr + ')');
+            let result = fn();
+            if (isNaN(result) || !isFinite(result)) throw new Error();
+            if (Math.abs(result) > 1e12) {
+                result = result.toExponential(6);
+            } else if (!Number.isInteger(result)) {
+                result = parseFloat(result.toFixed(8));
+            }
+            resSpan.innerText = result;
+            lastResult = result;
+        } catch (err) {
+            resSpan.innerText = "Error";
+            setTimeout(() => { if (resSpan.innerText === "Error") resSpan.innerText = "="; }, 1000);
+        }
+    }.bind(this);
+
+    // rebind functions
+    window.calculate = calculate;
+    window.clearAll = clearAll;
+    window.deleteLast = deleteLast;
+    window.addNum = addNum;
+    window.addOp = addOp;
+    window.addDot = addDot;
+    window.applyFunc = applyFunc;
+    // update global refs
+    window.calculate = window.calculate;
+    // initialize
+    updateDisplay();
+    resSpan.innerText = "0";
+</script>
+</body>
+</html>
