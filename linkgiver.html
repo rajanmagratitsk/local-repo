@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Links</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .btn {
+            display: block;
+            text-decoration: none;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+            transition: 0.3s ease;
+        }
+
+        .btn i {
+            margin-right: 10px;
+        }
+
+        /* Facebook */
+        .facebook {
+            background: linear-gradient(45deg, #1877f2, #3b5998);
+        }
+
+        .facebook:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(24,119,242,0.5);
+        }
+
+        /* Google */
+        .google {
+            background: linear-gradient(45deg, #ea4335, #fbbc05, #34a853, #4285f4);
+        }
+
+        .google:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(66,133,244,0.5);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Connect With Us</h2>
+
+    <a href="https://www.facebook.com" target="_blank" class="btn facebook">
+        <i class="fab fa-facebook-f"></i> Facebook
+    </a>
+
+    <a href="https://www.google.com" target="_blank" class="btn google">
+        <i class="fab fa-google"></i> Google
+    </a>
+</div>
+
+</body>
+</html>

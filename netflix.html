@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NepFlix | Netflix-style Nepali OTT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Netflix Sans', 'Helvetica Neue', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #141414;
+            overflow-x: hidden;
+        }
+
+        /* navbar - netflix style */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(180deg, #000000 0%, rgba(0,0,0,0.85) 50%, transparent 100%);
+            z-index: 100;
+            padding: 0.8rem 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            transition: all 0.3s;
+        }
+
+        .logo {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #e50914;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .logo small {
+            font-size: 0.75rem;
+            color: #fff;
+            font-weight: 400;
+            background: #e50914;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: none;
+            color: #e5e5e5;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.3rem 0;
+            cursor: pointer;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .filter-btn.active {
+            color: white;
+            border-bottom-color: #e50914;
+        }
+
+        .filter-btn:hover {
+            color: white;
+        }
+
+        /* hero banner */
+        .hero {
+            height: 70vh;
+            min-height: 500px;
+            background: linear-gradient(77deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 80%), url('https://placehold.co/1600x900/1a1a2e/e50914?text=Nepali+Cinema');
+            background-size: cover;
+            background-position: center 30%;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            padding: 0 4%;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 550px;
+            animation: fadeUp 0.6s ease;
+        }
+
+        .hero-badge {
+            background: #e50914;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 8px black;
+            margin-bottom: 0.8rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 1rem;
+            color: #ddd;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-desc {
+            color: #ccc;
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .hero-btn {
+            background: white;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-right: 1rem;
+        }
+
+        .hero-btn-dark {
+            background: rgba(109, 109, 110, 0.7);
+            color: white;
+        }
+
+        /* rows */
+        .row {
+            padding: 2rem 4% 0.5rem;
+            margin-top: -2rem;
+        }
+
+        .row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+        }
+
+        .row-title {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .movie-row {
+            display: flex;
+            gap: 0.6rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .movie-row::-webkit-scrollbar {
+            height: 6px;
+        }
+        .movie-row::-webkit-scrollbar-track {
+            background: #222;
+            border-radius: 10px;
+        }
+        .movie-row::-webkit-scrollbar-thumb {
+            background: #e50914;
+            border-radius: 10px;
+        }
+
+        /* card netflix style */
+        .card {
+            flex: 0 0 auto;
+            width: 180px;
+            transition: transform 0.25s, box-shadow 0.2s;
+            cursor: pointer;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .poster {
+            background: linear-gradient(145deg, #1f1f2f, #0a0a12);
+            aspect-ratio: 2/3;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            position: relative;
+            border-radius: 6px;
+        }
+
+        .badge-type {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: #e50914;
+        }
+
+        .card-info {
+            padding: 0.6rem 0.3rem;
+        }
+
+        .card-title {
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        /* modal - netflix style */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-container {
+            max-width: 750px;
+            width: 90%;
+            background: #181818;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: zoomIn 0.25s;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-hero {
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background: linear-gradient(0deg, #181818, #2a2a3a);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .modal-hero h2 {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 2px 8px black;
+        }
+
+        .modal-details {
+            padding: 1.5rem;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            color: #ddd;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating {
+            color: #46d369;
+        }
+
+        .modal-desc {
+            color: #b3b3b3;
+            line-height: 1.5;
+            margin: 1rem 0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+
+        .play-btn {
+            background: white;
+            border: none;
+            padding: 0.6rem 2rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #181818;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            border: 1px solid #666;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        @media (max-width: 700px) {
+            .hero-title { font-size: 2rem; }
+            .hero { min-height: 450px; }
+            .card { width: 140px; }
+            .navbar { padding: 0.5rem 4%; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">NEPFLIX <small>NEPAL</small></div>
+    <div class="nav-links">
+        <button class="filter-btn active" data-filter="all">सबै</button>
+        <button class="filter-btn" data-filter="movie">चलचित्र</button>
+        <button class="filter-btn" data-filter="series">सिरिज</button>
+    </div>
+</nav>
+
+<!-- hero banner dynamic -->
+<div class="hero" id="heroBanner">
+    <div class="hero-content">
+        <div class="hero-badge">🔥 नेपाली हिट</div>
+        <div class="hero-title" id="heroTitle">जारी</div>
+        <div class="hero-meta" id="heroMeta">
+            <span>2023</span>
+            <span>⭐ 4.8</span>
+            <span>चलचित्र</span>
+        </div>
+        <div class="hero-desc" id="heroDesc">नेपाली बक्स अफिसमा ऐतिहासिक सफलता, प्रेम र संघर्षको कथा।</div>
+        <div>
+            <button class="hero-btn" id="heroPlayBtn">▶ प्ले</button>
+            <button class="hero-btn hero-btn-dark" id="heroInfoBtn">ⓘ विवरण</button>
+        </div>
+    </div>
+</div>
+
+<!-- rows -->
+<div class="row">
+    <div class="row-header">
+        <h2 class="row-title">तपाईंको लागि सुझाव</h2>
+    </div>
+    <div class="movie-row" id="movieRow"></div>
+</div>
+
+<!-- modal -->
+<div id="modal" class="modal">
+    <div class="modal-container" id="modalContainer">
+        <div class="close-modal" id="closeModalBtn">✕</div>
+        <div class="modal-hero" id="modalHero">
+            <h2 id="modalTitle"></h2>
+        </div>
+        <div class="modal-details">
+            <div class="modal-meta" id="modalMeta"></div>
+            <div class="modal-desc" id="modalDesc"></div>
+            <div class="modal-buttons">
+                <button class="play-btn" id="modalPlayBtn">▶ हेर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Nepali content database
+    const nepaliContent = [
+        { id: 1, title: "जारी", type: "movie", year: "2023", rating: "4.8", emoji: "🎭", desc: "नेपाली सिनेमाको सर्वाधिक कमाई गर्ने फिल्म। प्रेम, बलिदान र गाउँले जीवनको मार्मिक कथा।", genre: "ड्रामा", featured: true },
+        { id: 2, title: "कबड्डी कबड्डी", type: "movie", year: "2015", rating: "4.6", emoji: "🏐", desc: "दयाहाङ राई र नम्रता श्रेष्ठको ब्लकबस्टर कमेडी रोमान्स। गाउँले प्रेम र कबड्डीको मजा।", genre: "कमेडी/रोमान्स" },
+        { id: 3, title: "प्रेम गीत", type: "movie", year: "2016", rating: "4.7", emoji: "🎵", desc: "पहाडी संस्कृति र संगीतमय प्रेमकथा। सुन्दर दृश्य र मधुर गीतहरूले भरिपूर्ण।", genre: "रोमान्स" },
+        { id: 4, title: "छक्का पञ्जा", type: "movie", year: "2016", rating: "4.5", emoji: "😂", desc: "दीपक राज गिरीको उत्कृष्ट कमेडी, परिवार र साथीभाइको मनोरञ्जन।", genre: "कमेडी" },
+        { id: 5, title: "पशुपति प्रसाद", type: "movie", year: "2016", rating: "4.9", emoji: "🍻", desc: "खगेन्द्र लामिछानेको ब्यंग्यात्मक हास्य फिल्म। दारीको राजनीति र सामाजिक कटाक्ष।", genre: "ब्यंग्य/कमेडी" },
+        { id: 6, title: "नाइ नभन्नु ल २", type: "series", year: "2023", rating: "4.7", emoji: "📺", desc: "नेपाली सिटकमको राजा। परिवार र हाँस्यले भरिएको वेब सिरिज। २४ एपिसोडहरू।", genre: "सिटकम", featured: false },
+        { id: 7, title: "साकुम्बा", type: "series", year: "2024", rating: "4.5", emoji: "🏔️", desc: "रहस्य, थ्रिलर र नेपाली मौलिकता मिसिएको वेब सिरिज। एक सासमा हेर्न मन लाग्ने।", genre: "थ्रिलर" },
+        { id: 8, title: "होस्टेल", type: "series", year: "2023", rating: "4.6", emoji: "🏠", desc: "छात्रावासको जीवन, साथी र रोमान्स। युवा पुस्ताको मन जित्ने सिरिज।", genre: "ड्रामा" },
+        { id: 9, title: "लुट २", type: "movie", year: "2017", rating: "4.8", emoji: "💰", desc: "सैफ महबूबको ब्ल्याक कमेडी। चोरीको अनौठो योजना र ट्विस्ट।", genre: "कमेडी/थ्रिलर" },
+        { id: 10, title: "आमा", type: "movie", year: "2022", rating: "4.4", emoji: "👩‍👧", desc: "आमाको त्याग र मायाको मार्मिक कथा। सबै उमेर समूहले मन पराएको फिल्म।", genre: "पारिवारिक" },
+        { id: 11, title: "दुर्लभ", type: "series", year: "2024", rating: "4.2", emoji: "🔍", desc: "नेपाली मूलको रहस्यमय थ्रिलर सिरिज। हरेक एपिसोडमा नयाँ मोड।", genre: "थ्रिलर" },
+        { id: 12, title: "जेरी", type: "movie", year: "2024", rating: "4.3", emoji: "🐕", desc: "कुकुर र मानव बीचको सम्बन्धमा आधारित हार्दिक फिल्म।", genre: "ड्रामा" },
+        { id: 13, title: "विराटको सपना", type: "series", year: "2024", rating: "4.5", emoji: "⚽", desc: "खेलकुद र सपनाको प्रेरणादायी कथा। युवा फुटबल खेलाडीको संघर्ष।", genre: "स्पोर्ट्स" }
+    ];
+
+    let currentFilter = "all";
+
+    function getFilteredItems() {
+        if (currentFilter === "all") return nepaliContent;
+        return nepaliContent.filter(item => item.type === currentFilter);
+    }
+
+    function renderRow() {
+        const items = getFilteredItems();
+        const row = document.getElementById("movieRow");
+        if (!row) return;
+        row.innerHTML = items.map(item => `
+            <div class="card" onclick="openModal(${item.id})">
+                <div class="poster">
+                    <span style="font-size: 3rem;">${item.emoji}</span>
+                    <span class="badge-type">${item.type === "movie" ? "चलचित्र" : "सिरिज"}</span>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">${item.title}</div>
+                    <div class="card-meta">
+                        <span>${item.year}</span>
+                        <span>⭐ ${item.rating}</span>
+                    </div>
+                </div>
+            </div>
+        `).join("");
+    }
+
+    // update hero based on featured or first movie
+    function updateHero() {
+        let featured = nepaliContent.find(c => c.featured === true);
+        if (!featured) featured = nepaliContent[0];
+        document.getElementById("heroTitle").innerText = featured.title;
+        document.getElementById("heroMeta").innerHTML = `<span>${featured.year}</span><span>⭐ ${featured.rating}</span><span>${featured.type === "movie" ? "चलचित्र" : "सिरिज"}</span>`;
+        document.getElementById("heroDesc").innerText = featured.desc;
+        const heroPlay = document.getElementById("heroPlayBtn");
+        const heroInfo = document.getElementById("heroInfoBtn");
+        heroPlay.onclick = () => watchNow(featured.id);
+        heroInfo.onclick = () => openModal(featured.id);
+    }
+
+    // Modal logic
+    let currentItem = null;
+    function openModal(id) {
+        currentItem = nepaliContent.find(i => i.id === id);
+        if (!currentItem) return;
+        const modal = document.getElementById("modal");
+        document.getElementById("modalTitle").innerText = currentItem.title;
+        document.getElementById("modalMeta").innerHTML = `
+            <span>📅 ${currentItem.year}</span>
+            <span class="rating">⭐ ${currentItem.rating}</span>
+            <span>🎬 ${currentItem.genre || "नेपाली"}</span>
+            <span>${currentItem.type === "movie" ? "🎥 चलचित्र" : "📺 वेब सिरिज"}</span>
+        `;
+        document.getElementById("modalDesc").innerText = currentItem.desc;
+        document.getElementById("modalHero").style.background = `linear-gradient(0deg, #181818, #2a2a3a), url('')`;
+        document.getElementById("modalHero").innerHTML = `<h2>${currentItem.title}</h2>`;
+        modal.style.display = "flex";
+    }
+
+    function watchNow(id) {
+        const item = nepaliContent.find(i => i.id === id);
+        alert(`🎬 "${item.title}" स्ट्रिमिङ सुरु हुँदैछ...\nधन्यवाद ! नेपाली सिनेमाको साथ राख्नुहोस्। 🍿`);
+        closeModal();
+    }
+
+    function closeModal() {
+        document.getElementById("modal").style.display = "none";
+    }
+
+    // filter buttons event
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentFilter = btn.getAttribute("data-filter");
+            renderRow();
+        });
+    });
+
+    // modal close handlers
+    document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+    document.getElementById("modal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("modal")) closeModal();
+    });
+    document.getElementById("modalPlayBtn").addEventListener("click", () => {
+        if (currentItem) watchNow(currentItem.id);
+    });
+
+    // scroll effect navbar
+    window.addEventListener("scroll", () => {
+        const nav = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+            nav.style.background = "#0a0a0a";
+            nav.style.boxShadow = "0 2px 10px rgba(0,0,0,0.5)";
+        } else {
+            nav.style.background = "linear-gradient(180deg, #000000 0%, rgba(0,0,0,0.85) 50%, transparent 100%)";
+        }
+    });
+
+    renderRow();
+    updateHero();
+</script>
+</body>
+</html>
