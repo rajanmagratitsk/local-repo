@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+}
+.dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: cyan;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 10px cyan;
+}
+</style>
+</head>
+<body>
+
+<script>
+document.addEventListener("mousemove", function(e) {
+  let dot = document.createElement("div");
+  dot.classList.add("dot");
+  dot.style.left = e.pageX + "px";
+  dot.style.top = e.pageY + "px";
+  document.body.appendChild(dot);
+
+  setTimeout(() => dot.remove(), 500);
+});
+</script>
+
+</body>
+</html>
