@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body style="background:black; color:lime; font-family:monospace;">
+
+<h2 id="text"></h2>
+
+<script>
+let msg = "Welcome Rajan 🚀 Learning HTML like a hacker...";
+let i = 0;
+
+function type() {
+  if (i < msg.length) {
+    document.getElementById("text").innerHTML += msg.charAt(i);
+    i++;
+    setTimeout(type, 50);
+  }
+}
+type();
+</script>
+
+</body>
+</html>
