@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body style="text-align:center; margin-top:100px;">
+
+<h2 id="quote">Click button for quote</h2>
+<button onclick="newQuote()">New Quote</button>
+
+<script>
+let quotes = [
+  "Success needs consistency.",
+  "Code. Break. Fix. Repeat.",
+  "Stay hungry, stay foolish.",
+  "Discipline beats motivation.",
+  "Dream big, work hard."
+];
+
+function newQuote() {
+  let random = Math.floor(Math.random() * quotes.length);
+  document.getElementById("quote").innerText = quotes[random];
+}
+</script>
+
+</body>
+</html>
