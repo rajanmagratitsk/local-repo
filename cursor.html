@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body style="background:black;display:flex;justify-content:center;align-items:center;height:100vh;">
+
+<div style="display:flex;gap:50px;">
+  <div class="eye"></div>
+  <div class="eye"></div>
+</div>
+
+<style>
+.eye {
+  width:100px;
+  height:100px;
+  background:white;
+  border-radius:50%;
+  position:relative;
+}
+.pupil {
+  width:30px;
+  height:30px;
+  background:black;
+  border-radius:50%;
+  position:absolute;
+  top:35px;
+  left:35px;
+}
+</style>
+
+<script>
+document.querySelectorAll(".eye").forEach(eye=>{
+  let pupil = document.createElement("div");
+  pupil.className="pupil";
+  eye.appendChild(pupil);
+
+  document.addEventListener("mousemove", e=>{
+    let rect = eye.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+    pupil.style.left = x/5 + "px";
+    pupil.style.top = y/5 + "px";
+  });
+});
+</script>
+
+</body>
+</html>
