@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin:0;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.dna {
+  position:relative;
+  width:100px;
+  height:300px;
+}
+.dot {
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:cyan;
+  border-radius:50%;
+  animation: move 2s linear infinite;
+}
+@keyframes move {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(40px); }
+  100% { transform: translateX(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="dna" id="dna"></div>
+
+<script>
+for(let i=0;i<20;i++){
+  let d = document.createElement("div");
+  d.className="dot";
+  d.style.top = i*15+"px";
+  d.style.animationDelay = i*0.1+"s";
+  document.getElementById("dna").appendChild(d);
+}
+</script>
+
+</body>
+</html>
