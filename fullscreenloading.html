@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loading Screen</title>
+<style>
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+  font-family: Arial;
+}
+
+#loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Glowing Text */
+#loadingText {
+  color: cyan;
+  font-size: 40px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px cyan;
+}
+
+/* Progress Bar */
+#bar {
+  width: 300px;
+  height: 10px;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#progress {
+  width: 0%;
+  height: 100%;
+  background: cyan;
+  box-shadow: 0 0 15px cyan;
+}
+
+/* Percentage */
+#percent {
+  color: white;
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+/* Hide content initially */
+#content {
+  display: none;
+  color: white;
+  text-align: center;
+  margin-top: 200px;
+  font-size: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+  <div id="loadingText">LOADING...</div>
+  <div id="bar">
+    <div id="progress"></div>
+  </div>
+  <div id="percent">0%</div>
+</div>
+
+<div id="content">
+  🚀 Welcome Rajan! Page Loaded Successfully
+</div>
+
+<script>
+let progress = 0;
+let interval = setInterval(() => {
+  progress++;
+  document.getElementById("progress").style.width = progress + "%";
+  document.getElementById("percent").innerText = progress + "%";
+
+  if (progress >= 100) {
+    clearInterval(interval);
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  }
+}, 30);
+</script>
+
+</body>
+</html>
