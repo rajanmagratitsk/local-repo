@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body style="height:100vh;display:flex;justify-content:center;align-items:center;">
+
+<button id="btn" style="padding:20px 40px;font-size:20px;">Catch Me 😈</button>
+
+<script>
+let btn = document.getElementById("btn");
+
+document.addEventListener("mousemove", e=>{
+  let rect = btn.getBoundingClientRect();
+  let dx = e.clientX - (rect.left + rect.width/2);
+  let dy = e.clientY - (rect.top + rect.height/2);
+  let dist = Math.sqrt(dx*dx + dy*dy);
+
+  if(dist < 150){
+    btn.style.transform = `translate(${-dx}px, ${-dy}px)`;
+  } else {
+    btn.style.transform = `translate(0,0)`;
+  }
+});
+</script>
+
+</body>
+</html>
