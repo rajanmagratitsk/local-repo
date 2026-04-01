@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body style="background:black;display:flex;justify-content:center;align-items:center;height:100vh;">
+<canvas id="c"></canvas>
+
+<script>
+let c = document.getElementById("c");
+let ctx = c.getContext("2d");
+c.width = 600; c.height = 300;
+
+function draw(t){
+  ctx.fillStyle="black";
+  ctx.fillRect(0,0,c.width,c.height);
+
+  ctx.strokeStyle="cyan";
+  ctx.beginPath();
+
+  for(let x=0;x<c.width;x++){
+    let y = 150 + Math.sin((x+t)/20)*50*Math.sin(t/20);
+    ctx.lineTo(x,y);
+  }
+
+  ctx.stroke();
+  requestAnimationFrame(()=>draw(t+2));
+}
+draw(0);
+</script>
+</body>
+</html>
