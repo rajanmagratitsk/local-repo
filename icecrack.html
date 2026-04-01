@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden;background:black;">
+<canvas id="c"></canvas>
+
+<script>
+let canvas = document.getElementById("c");
+let ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+document.addEventListener("click", e=>{
+  for(let i=0;i<20;i++){
+    ctx.beginPath();
+    ctx.moveTo(e.clientX, e.clientY);
+    ctx.lineTo(e.clientX + (Math.random()-0.5)*200, e.clientY + (Math.random()-0.5)*200);
+    ctx.strokeStyle="white";
+    ctx.stroke();
+  }
+});
+</script>
+</body>
+</html>
