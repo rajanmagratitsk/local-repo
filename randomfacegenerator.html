@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body style="text-align:center;margin-top:100px;background:#111;color:white;">
+
+<div id="face" style="font-size:50px;">🙂</div>
+<button onclick="gen()">New Face</button>
+
+<script>
+let eyes = ["👀","😎","😵","🤓"];
+let mouths = ["🙂","😆","😐","😡","😜"];
+
+function gen(){
+  let e = eyes[Math.floor(Math.random()*eyes.length)];
+  let m = mouths[Math.floor(Math.random()*mouths.length)];
+  document.getElementById("face").innerText = e + "\n" + m;
+}
+</script>
+
+</body>
+</html>
