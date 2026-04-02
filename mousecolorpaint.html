@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;background:black;overflow:hidden;">
+<canvas id="c"></canvas>
+
+<script>
+let c = document.getElementById("c");
+let ctx = c.getContext("2d");
+c.width = innerWidth;
+c.height = innerHeight;
+
+document.addEventListener("mousemove", e=>{
+  ctx.beginPath();
+  ctx.arc(e.clientX, e.clientY, 5, 0, Math.PI*2);
+  ctx.fillStyle = `hsl(${Math.random()*360},100%,50%)`;
+  ctx.fill();
+});
+</script>
+</body>
+</html>
