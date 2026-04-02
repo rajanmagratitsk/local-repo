@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;background:black;overflow:hidden;">
+<script>
+let particles=[];
+
+for(let i=0;i<100;i++){
+  let d=document.createElement("div");
+  d.style.position="absolute";
+  d.style.width="5px";
+  d.style.height="5px";
+  d.style.background="cyan";
+  d.style.left=Math.random()*innerWidth+"px";
+  d.style.top=Math.random()*innerHeight+"px";
+  document.body.appendChild(d);
+  particles.push(d);
+}
+
+document.addEventListener("mousemove", e=>{
+  particles.forEach(p=>{
+    let x=parseFloat(p.style.left);
+    let y=parseFloat(p.style.top);
+
+    p.style.left = x + (e.clientX-x)*0.05 + "px";
+    p.style.top = y + (e.clientY-y)*0.05 + "px";
+  });
+});
+</script>
+</body>
+</html>
