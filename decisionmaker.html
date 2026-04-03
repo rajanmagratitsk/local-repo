@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body style="text-align:center;margin-top:100px;">
+
+<h2>🤯 Can't decide? Let me choose</h2>
+
+<input id="opt1" placeholder="Option 1"><br><br>
+<input id="opt2" placeholder="Option 2"><br><br>
+
+<button onclick="decide()">Decide</button>
+
+<h2 id="result"></h2>
+
+<script>
+function decide(){
+  let o1 = document.getElementById("opt1").value;
+  let o2 = document.getElementById("opt2").value;
+
+  let choice = Math.random() > 0.5 ? o1 : o2;
+
+  document.getElementById("result").innerText = "👉 Go with: " + choice;
+}
+</script>
+
+</body>
+</html>
