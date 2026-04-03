@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body style="text-align:center;margin-top:100px;font-family:Arial;">
+
+<h2>🤔 Answer honestly...</h2>
+<p>Did you cheat in exam?</p>
+
+<textarea id="input" placeholder="Type your answer..."></textarea><br><br>
+<button onclick="detect()">Analyze</button>
+
+<h2 id="result"></h2>
+
+<script>
+let startTime;
+
+document.getElementById("input").addEventListener("focus", ()=>{
+  startTime = new Date().getTime();
+});
+
+function detect(){
+  let timeTaken = (new Date().getTime() - startTime)/1000;
+  let text = document.getElementById("input").value.toLowerCase();
+
+  let result = "";
+
+  if(timeTaken > 5 && text.includes("no")){
+    result = "🤨 Suspicious... You hesitated!";
+  } else if(text.includes("yes")){
+    result = "😐 At least you're honest.";
+  } else {
+    result = "😎 Seems confident!";
+  }
+
+  document.getElementById("result").innerText = result;
+}
+</script>
+
+</body>
+</html>
