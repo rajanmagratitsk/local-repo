@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Typing Speed Test</title>
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #141e30, #243b55);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background: #111;
+  padding: 25px;
+  border-radius: 15px;
+  width: 500px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+h2 {
+  text-align: center;
+}
+
+#text {
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: cyan;
+  color: black;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>⌨ Typing Speed Test</h2>
+
+  <div id="text"></div>
+
+  <textarea id="input" placeholder="Start typing here..."></textarea>
+
+  <div class="stats">
+    <div>⏱ Time: <span id="time">60</span>s</div>
+    <div>⚡ WPM: <span id="wpm">0</span></div>
+    <div>❌ Mistakes: <span id="mistakes">0</span></div>
+  </div>
+
+  <button onclick="startTest()">Start / Restart</button>
+</div>
+
+<script>
+let paragraphs = [
+  "Coding is fun when you understand the logic behind it.",
+  "Practice daily to improve your typing speed and accuracy.",
+  "JavaScript makes web pages interactive and dynamic.",
+  "Consistency is the key to becoming a great developer."
+];
+
+let timer = 60;
+let interval;
+let started = false;
+
+function startTest(){
+  let randomText = paragraphs[Math.floor(Math.random()*paragraphs.length)];
+  document.getElementById("text").innerText = randomText;
+  document.getElementById("input").value = "";
+  timer = 60;
+  started = false;
+
+  clearInterval(interval);
+  document.getElementById("time").innerText = timer;
+  document.getElementById("wpm").innerText = 0;
+  document.getElementById("mistakes").innerText = 0;
+}
+
+document.getElementById("input").addEventListener("input", function(){
+  if(!started){
+    started = true;
+    interval = setInterval(()=>{
+      timer--;
+      document.getElementById("time").innerText = timer;
+
+      if(timer <= 0){
+        clearInterval(interval);
+        calculate();
+      }
+    },1000);
+  }
+});
+
+function calculate(){
+  let input = document.getElementById("input").value;
+  let original = document.getElementById("text").innerText;
+
+  let wordsTyped = input.trim().split(/\s+/).length;
+  let wpm = Math.round(wordsTyped);
+
+  let mistakes = 0;
+  for(let i=0;i<input.length;i++){
+    if(input[i] !== original[i]){
+      mistakes++;
+    }
+  }
+
+  document.getElementById("wpm").innerText = wpm;
+  document.getElementById("mistakes").innerText = mistakes;
+}
+
+// initialize
+startTest();
+</script>
+
+</body>
+</html>
