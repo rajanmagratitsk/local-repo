@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body id="body" style="text-align:center; padding:50px; font-family:Arial;">
+
+<h2>Dark Mode Toggle</h2>
+
+<button onclick="toggleMode()">Toggle Mode</button>
+
+<script>
+let dark = false;
+
+function toggleMode() {
+    if(dark) {
+        document.body.style.background = "white";
+        document.body.style.color = "black";
+    } else {
+        document.body.style.background = "black";
+        document.body.style.color = "white";
+    }
+    dark = !dark;
+}
+</script>
+
+</body>
+</html>
