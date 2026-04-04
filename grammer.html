@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grammar Checker</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f0f0;
+            text-align: center;
+            padding: 40px;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: left;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Grammar Checker</h2>
+
+    <textarea id="text" placeholder="Enter your sentence here..."></textarea><br>
+    <button onclick="checkGrammar()">Check Grammar</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function checkGrammar() {
+            let text = document.getElementById("text").value;
+
+            let response = await fetch("https://api.languagetool.org/v2/check", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `text=${encodeURIComponent(text)}&language=en-US`
+            });
+
+            let data = await response.json();
+            let resultDiv = document.getElementById("result");
+
+            if (data.matches.length === 0) {
+                resultDiv.innerHTML = "<p>No grammar mistakes found ✅</p>";
+                return;
+            }
+
+            let output = "<h3>Errors Found:</h3>";
+
+            data.matches.forEach(match => {
+                output += `
+                    <p>
+                        <span class="error">Error:</span> ${match.message} <br>
+                        <span class="error">Suggestion:</span> ${match.replacements.map(r => r.value).join(", ")}
+                    </p>
+                `;
+            });
+
+            resultDiv.innerHTML = output;
+        }
+    </script>
+
+</body>
+</html>
