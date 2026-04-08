@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unique CSS Animations</title>
+<style>
+  body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #cce7ff;
+    font-family: sans-serif;
+  }
+
+  /* 1. Swinging Tree */
+  .tree {
+    width: 20px;
+    height: 150px;
+    background: brown;
+    position: relative;
+    transform-origin: top center;
+    animation: swing 2s infinite ease-in-out alternate;
+  }
+  .tree::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -40px;
+    width: 100px;
+    height: 60px;
+    background: green;
+    border-radius: 50%;
+  }
+  @keyframes swing {
+    0% { transform: rotate(-10deg); }
+    100% { transform: rotate(10deg); }
+  }
+
+  /* 2. Bouncing Ball */
+  .ball {
+    width: 50px;
+    height: 50px;
+    background: red;
+    border-radius: 50%;
+    animation: bounce 1s infinite alternate;
+  }
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-150px); }
+  }
+
+  /* 3. Rotating Sun */
+  .sun {
+    width: 80px;
+    height: 80px;
+    background: yellow;
+    border-radius: 50%;
+    position: relative;
+    animation: rotateSun 5s linear infinite;
+  }
+  .sun::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 30px;
+    width: 20px;
+    height: 40px;
+    background: orange;
+    transform-origin: bottom center;
+    border-radius: 10px;
+  }
+  @keyframes rotateSun {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* 4. Waving Flag */
+  .flag {
+    width: 120px;
+    height: 60px;
+    background: red;
+    clip-path: polygon(0 0, 100% 10%, 100% 90%, 0% 100%);
+    animation: wave 1.5s infinite linear;
+  }
+  @keyframes wave {
+    0% { transform: skewX(0deg); }
+    50% { transform: skewX(15deg); }
+    100% { transform: skewX(0deg); }
+  }
+
+  /* 5. Floating Cloud */
+  .cloud {
+    width: 120px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    position: relative;
+    animation: float 6s infinite alternate ease-in-out;
+  }
+  .cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+  .cloud::before {
+    width: 80px; height: 80px; top: -20px; left: 10px;
+  }
+  .cloud::after {
+    width: 60px; height: 60px; top: 10px; left: 60px;
+  }
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(-30px) translateX(20px); }
+  }
+
+</style>
+</head>
+<body>
+  <div class="tree"></div>
+  <div class="ball"></div>
+  <div class="sun"></div>
+  <div class="flag"></div>
+  <div class="cloud"></div>
+</body>
+</html>
