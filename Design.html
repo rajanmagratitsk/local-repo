@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>More Unique Animations</title>
+<style>
+  body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #87ceeb;
+    font-family: sans-serif;
+  }
+
+  /* 1. Swinging Lantern */
+  .lantern {
+    width: 20px;
+    height: 80px;
+    background: brown;
+    position: relative;
+    transform-origin: top center;
+    animation: lanternSwing 2s infinite alternate ease-in-out;
+  }
+  .lantern::before {
+    content: '';
+    position: absolute;
+    top: 80px;
+    left: -15px;
+    width: 50px;
+    height: 60px;
+    background: orange;
+    border-radius: 10px 10px 30px 30px;
+  }
+  @keyframes lanternSwing {
+    0% { transform: rotate(-15deg); }
+    100% { transform: rotate(15deg); }
+  }
+
+  /* 2. Twinkling Star */
+  .star {
+    width: 30px;
+    height: 30px;
+    background: yellow;
+    clip-path: polygon(
+      50% 0%, 61% 35%, 98% 35%, 68% 57%, 
+      79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
+    );
+    animation: twinkle 1.5s infinite alternate;
+  }
+  @keyframes twinkle {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.5); opacity: 1; }
+  }
+
+  /* 3. Flying Bird */
+  .bird {
+    width: 40px;
+    height: 20px;
+    background: darkblue;
+    clip-path: polygon(0 50%, 50% 0%, 100% 50%, 50% 100%);
+    animation: fly 4s infinite linear;
+  }
+  @keyframes fly {
+    0% { transform: translateX(-200px) translateY(0) rotate(0deg); }
+    50% { transform: translateX(200px) translateY(-50px) rotate(15deg); }
+    100% { transform: translateX(600px) translateY(0) rotate(0deg); }
+  }
+
+  /* 4. Jumping Fish */
+  .fish {
+    width: 60px;
+    height: 30px;
+    background: #ff6347;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    position: relative;
+    animation: jump 2s infinite ease-in-out;
+  }
+  .fish::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #ff4500;
+    top: 5px;
+    left: -10px;
+    clip-path: polygon(0 50%, 100% 0%, 100% 100%);
+  }
+  @keyframes jump {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-100px) rotate(20deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+
+  /* 5. Moving River */
+  .river {
+    width: 200px;
+    height: 40px;
+    background: linear-gradient(to right, #00f, #0ff, #00f);
+    border-radius: 20px;
+    animation: riverFlow 3s linear infinite;
+  }
+  @keyframes riverFlow {
+    0% { background-position: 0 0; }
+    100% { background-position: 200px 0; }
+  }
+</style>
+</head>
+<body>
+  <div class="lantern"></div>
+  <div class="star"></div>
+  <div class="bird"></div>
+  <div class="fish"></div>
+  <div class="river"></div>
+</body>
+</html>
