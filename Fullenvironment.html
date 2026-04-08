@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animated Scenic View</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(#87ceeb, #a0d8ef); /* sky */
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Sun */
+  .sun {
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #FFD700, #FFA500);
+    border-radius: 50%;
+    animation: sunrise 15s linear infinite alternate;
+  }
+  @keyframes sunrise {
+    0% { bottom: -100px; }
+    100% { bottom: 300px; }
+  }
+
+  /* Mountains */
+  .mountains {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(#2e8b57, #006400);
+    clip-path: polygon(
+      0% 100%, 10% 60%, 20% 80%, 30% 50%, 40% 70%, 
+      50% 40%, 60% 70%, 70% 50%, 80% 80%, 90% 60%, 100% 100%
+    );
+  }
+
+  /* Jungle Trees */
+  .tree {
+    position: absolute;
+    bottom: 0;
+    width: 40px;
+    height: 120px;
+    background: sienna;
+    left: 20%;
+    transform-origin: bottom center;
+    animation: sway 4s infinite alternate ease-in-out;
+  }
+  .tree::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: -40px;
+    width: 120px;
+    height: 80px;
+    background: green;
+    border-radius: 50%;
+  }
+  .tree2 {
+    left: 70%;
+    height: 150px;
+    animation-duration: 5s;
+  }
+  @keyframes sway {
+    0% { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+  }
+
+  /* River */
+  .river {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 120%;
+    height: 200px;
+    background: linear-gradient(to right, #1e90ff, #00bfff, #1e90ff);
+    border-radius: 50%;
+    transform: translateX(-50%) rotate(0deg);
+    animation: flow 6s linear infinite;
+  }
+  @keyframes flow {
+    0% { background-position: 0 0; }
+    100% { background-position: 400px 0; }
+  }
+</style>
+</head>
+<body>
+  <div class="sun"></div>
+  <div class="mountains"></div>
+  <div class="tree"></div>
+  <div class="tree tree2"></div>
+  <div class="river"></div>
+</body>
+</html>
