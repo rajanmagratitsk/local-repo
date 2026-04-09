@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Complete Java Course</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #0f172a;
+    color: #e2e8f0;
+}
+header {
+    background: #020617;
+    padding: 20px;
+    text-align: center;
+}
+header h1 {
+    color: #38bdf8;
+}
+nav {
+    background: #1e293b;
+    padding: 15px;
+}
+nav a {
+    color: #38bdf8;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+section {
+    padding: 30px 20px;
+}
+h2 {
+    color: #38bdf8;
+    margin-top: 40px;
+}
+.topic {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+code {
+    display: block;
+    background: #334155;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    white-space: pre-wrap;
+}
+button {
+    background: #38bdf8;
+    border: none;
+    padding: 10px 20px;
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background: #0ea5e9;
+}
+.collapsible {
+    background-color: #334155;
+    color: #38bdf8;
+    cursor: pointer;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.active, .collapsible:hover {
+    background-color: #0ea5e9;
+    color: black;
+}
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #1e293b;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Complete Java Course</h1>
+    <p>Learn Java step by step in one page</p>
+</header>
+
+<nav>
+    <a href="#basics">Basics</a>
+    <a href="#oop">OOP Concepts</a>
+    <a href="#advanced">Advanced</a>
+    <a href="#projects">Projects</a>
+</nav>
+
+<section id="basics">
+    <h2>Java Basics</h2>
+    <div class="topic">
+        <button class="collapsible">1. Introduction to Java</button>
+        <div class="content">
+            <p>Java is a high-level, class-based, object-oriented programming language.</p>
+            <p>Key points:</p>
+            <ul>
+                <li>Platform independent (Write Once Run Anywhere)</li>
+                <li>Runs on JVM</li>
+                <li>Strongly typed language</li>
+            </ul>
+        </div>
+
+        <button class="collapsible">2. Data Types & Variables</button>
+        <div class="content">
+            <p>Java data types:</p>
+            <ul>
+                <li>int, float, double, char, boolean</li>
+                <li>String (class)</li>
+            </ul>
+            <code>
+int age = 25;  
+double price = 9.99;  
+char grade = 'A';  
+boolean isActive = true;
+            </code>
+        </div>
+
+        <button class="collapsible">3. Control Structures</button>
+        <div class="content">
+            <p>Conditionals:</p>
+            <code>
+if(age &gt; 18){  
+    System.out.println("Adult");  
+}else{  
+    System.out.println("Minor");  
+}
+            </code>
+            <p>Loops:</p>
+            <code>
+for(int i=0; i&lt;5; i++){  
+    System.out.println(i);  
+}  
+while(true){  
+    break;  
+}
+            </code>
+        </div>
+    </div>
+</section>
+
+<section id="oop">
+<h2>Object-Oriented Programming</h2>
+<div class="topic">
+    <button class="collapsible">1. Classes & Objects</button>
+    <div class="content">
+        <code>
+class Student {  
+    String name;  
+    int age;  
+
+    void display(){  
+        System.out.println(name + " " + age);  
+    }  
+}  
+
+public class Main {  
+    public static void main(String[] args){  
+        Student s1 = new Student();  
+        s1.name = "Rajan";  
+        s1.age = 21;  
+        s1.display();  
+    }  
+}
+        </code>
+    </div>
+
+    <button class="collapsible">2. Inheritance</button>
+    <div class="content">
+        <code>
+class Person {  
+    String name;  
+}  
+
+class Teacher extends Person {  
+    String subject;  
+}
+        </code>
+    </div>
+
+    <button class="collapsible">3. Polymorphism & Encapsulation</button>
+    <div class="content">
+        <p>Polymorphism: Method overloading & overriding</p>
+        <p>Encapsulation: Using private variables and getter/setter methods</p>
+    </div>
+</div>
+</section>
+
+<section id="advanced">
+<h2>Advanced Java</h2>
+<div class="topic">
+    <button class="collapsible">1. Exception Handling</button>
+    <div class="content">
+        <code>
+try{  
+    int result = 10/0;  
+}catch(ArithmeticException e){  
+    System.out.println("Cannot divide by zero");  
+}finally{  
+    System.out.println("Done");  
+}
+        </code>
+    </div>
+
+    <button class="collapsible">2. Collections</button>
+    <div class="content">
+        <code>
+import java.util.ArrayList;
+
+ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();  
+list.add("Rajan");  
+list.add("Sarki");  
+System.out.println(list);
+        </code>
+    </div>
+
+    <button class="collapsible">3. File I/O</button>
+    <div class="content">
+        <code>
+import java.io.File;  
+File file = new File("data.txt");  
+if(file.exists()){  
+    System.out.println("File exists");  
+}
+        </code>
+    </div>
+</div>
+</section>
+
+<section id="projects">
+<h2>Practical Projects</h2>
+<div class="topic">
+    <ul>
+        <li>Simple Calculator (Console)</li>
+        <li>Student Management System</li>
+        <li>Banking Application</li>
+        <li>Mini Quiz App</li>
+    </ul>
+</div>
+</section>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+for(var i = 0; i < coll.length; i++){
+    coll[i].addEventListener("click", function(){
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if(content.style.display === "block"){
+            content.style.display = "none";
+        }else{
+            content.style.display = "block";
+        }
+    });
+}
+</script>
+
+</body>
+</html>
