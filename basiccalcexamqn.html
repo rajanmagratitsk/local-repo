@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic Calculator</title>
+    <style>
+        body{
+            font-family: Arial;
+            background: lightblue;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .box{
+            background: white;
+            width: 350px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        input{
+            width: 180px;
+            padding: 8px;
+            margin: 10px;
+        }
+
+        button{
+            width: 70px;
+            padding: 10px;
+            margin: 5px;
+            background: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            background: darkblue;
+        }
+
+        #result{
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Basic Calculator</h2>
+
+    First Number:
+    <input type="number" id="num1"><br>
+
+    Second Number:
+    <input type="number" id="num2"><br>
+
+    Output:
+    <input type="text" id="result" readonly><br>
+
+    <button onclick="add()">Add</button>
+    <button onclick="sub()">Sub</button>
+    <button onclick="mul()">Mul</button>
+    <button onclick="div()">Div</button>
+</div>
+
+<script>
+function add(){
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+    document.getElementById("result").value = a + b;
+}
+
+function sub(){
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+    document.getElementById("result").value = a - b;
+}
+
+function mul(){
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+    document.getElementById("result").value = a * b;
+}
+
+function div(){
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+    document.getElementById("result").value = a / b;
+}
+</script>
+
+</body>
+</html>
