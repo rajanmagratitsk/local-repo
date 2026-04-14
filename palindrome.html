@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Palindrome Number</title>
+</head>
+<body>
+
+<h2>Check Palindrome</h2>
+
+<label>Enter Number:</label>
+<input type="number" id="num">
+<button onclick="pal()">Check</button>
+
+<p id="result"></p>
+
+<script>
+function pal() {
+    let n = document.getElementById("num").value;
+    let rev = n.split('').reverse().join('');
+
+    if(n == rev)
+        document.getElementById("result").innerHTML = "Palindrome Number";
+    else
+        document.getElementById("result").innerHTML = "Not Palindrome";
+}
+</script>
+
+</body>
+</html>
