@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fibonacci Series</title>
+</head>
+<body>
+
+<h2>Find N Fibonacci Numbers</h2>
+
+<label>Enter Number:</label>
+<input type="number" id="num">
+<button onclick="fib()">Show</button>
+
+<p id="result"></p>
+
+<script>
+function fib() {
+    let n = document.getElementById("num").value;
+    let a = 0, b = 1, c;
+    let output = "";
+
+    for(let i = 1; i <= n; i++) {
+        output += a + " ";
+        c = a + b;
+        a = b;
+        b = c;
+    }
+
+    document.getElementById("result").innerHTML = output;
+}
+</script>
+
+</body>
+</html>
