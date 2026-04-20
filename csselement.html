@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Margin vs Padding Demo</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            background:#f0f0f0;
+            padding:20px;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        /* OUTER BOX shows margin */
+        .outer{
+            background: lightblue;
+            margin: 40px;
+            padding: 20px;
+        }
+
+        /* INNER BOX shows padding */
+        .inner{
+            background: white;
+            padding: 30px;
+            border: 2px solid black;
+        }
+
+        /* Visual explanation box */
+        .note{
+            background: #fff3cd;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 5px solid orange;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Margin and Padding Visualization</h1>
+
+<div class="outer">
+    OUTER BOX (This has MARGIN around it)
+
+    <div class="inner">
+        INNER BOX (This has PADDING inside it)
+    </div>
+</div>
+
+<div class="note">
+    <b>Explanation:</b><br><br>
+
+    ✔ <b>Margin</b> = Space outside the element (pushes element away from others)<br>
+    ✔ <b>Padding</b> = Space inside the element (between content and border)<br><br>
+
+    In this example:<br>
+    - Blue area shows margin effect<br>
+    - White box shows padding effect
+</div>
+
+</body>
+</html>
