@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Iteration vs Recursion</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      padding: 40px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 15px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #16a085;
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    code {
+      background: #ecf0f1;
+      padding: 2px 5px;
+      border-radius: 4px;
+      display: block;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Difference Between Iteration and Recursion</h1>
+
+  <table>
+    <tr>
+      <th>Aspect</th>
+      <th>Iteration</th>
+      <th>Recursion</th>
+    </tr>
+    <tr>
+      <td>Definition</td>
+      <td>Process of repeating steps using loops (<code>for</code>, <code>while</code>).</td>
+      <td>Process where a function calls itself until a base condition is met.</td>
+    </tr>
+    <tr>
+      <td>Approach</td>
+      <td>Uses loop control structures to repeat operations.</td>
+      <td>Uses function calls and stack memory to repeat operations.</td>
+    </tr>
+    <tr>
+      <td>Factorial Example</td>
+      <td>
+        <code>
+function factorialIter(n) {<br>
+  let result = 1;<br>
+  for (let i = 1; i <= n; i++) {<br>
+    result *= i;<br>
+  }<br>
+  return result;<br>
+}
+        </code>
+      </td>
+      <td>
+        <code>
+function factorialRec(n) {<br>
+  if (n === 0 || n === 1) return 1;<br>
+  return n * factorialRec(n - 1);<br>
+}
+        </code>
+      </td>
+    </tr>
+    <tr>
+      <td>Memory Usage</td>
+      <td>Efficient, uses constant memory for loop variables.</td>
+      <td>Consumes more memory due to function call stack.</td>
+    </tr>
+    <tr>
+      <td>Termination</td>
+      <td>Loop ends when condition fails.</td>
+      <td>Recursion ends when base case is reached.</td>
+    </tr>
+    <tr>
+      <td>Performance</td>
+      <td>Generally faster and less memory-intensive.</td>
+      <td>Can be slower and risk stack overflow if base case is missing.</td>
+    </tr>
+  </table>
+
+</body>
+</html>
