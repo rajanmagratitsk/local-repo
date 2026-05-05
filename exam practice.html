@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Layout Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial;
+        }
+
+        .container {
+            width: 100%;
+            border: 1px solid black;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+            border-bottom: 1px solid black;
+        }
+
+        .header {
+            display: flex;
+            padding: 10px;
+            border-bottom: 1px solid black;
+        }
+
+        .logo {
+            width: 30%;
+        }
+
+        .title {
+            width: 70%;
+            text-align: center;
+        }
+
+        .menu {
+            padding: 10px;
+            border-bottom: 1px solid black;
+        }
+
+        .main {
+            display: flex;
+            min-height: 200px;
+        }
+
+        .left {
+            width: 50%;
+            padding: 10px;
+            border-right: 1px solid black;
+        }
+
+        .right {
+            width: 50%;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            border-top: 1px solid black;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="topbar">
+        <div>Phone: 01-545454545 Address: Kirtipur Kathmandu</div>
+        <div>Social Media List (Link)</div>
+    </div>
+
+    <div class="header">
+        <div class="logo">Logo [Image]</div>
+        <div class="title"><h1>Website Name</h1></div>
+    </div>
+
+    <div class="menu">
+        Menu
+    </div>
+
+    <div class="main">
+        <div class="left">
+            <h3>Recent Posts</h3>
+            <ul>
+                <li>Post 1 title</li>
+                <li>Post 2 title</li>
+                <li>Post 3 title</li>
+                <li>Post 4 title</li>
+                <li>Post 5 title</li>
+            </ul>
+        </div>
+
+        <div class="right">
+            <p>[Image]</p>
+            <p>Description.................(Paragraph)</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        Copyright @unibytes.xyz
+    </div>
+
+</div>
+
+</body>
+</html>
