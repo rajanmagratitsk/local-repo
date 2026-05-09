@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Box Model Demo</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .box {
+            width: 300px;
+
+            /* CONTENT */
+            background-color: lightblue;
+
+            /* PADDING */
+            padding: 20px;
+
+            /* BORDER */
+            border: 5px solid black;
+
+            /* MARGIN */
+            margin: 50px;
+
+            text-align: center;
+        }
+
+        .label {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align:center;">CSS Box Model Example</h2>
+
+    <div class="box">
+        This is the content area
+    </div>
+
+    <div class="label">
+        Margin → Border → Padding → Content
+    </div>
+
+</body>
+</html>
