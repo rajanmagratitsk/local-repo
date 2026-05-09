@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CSS Selectors Example</title>
+
+<style>
+/* 1. Element Selector */
+p {
+    color: blue;
+}
+
+/* 2. Class Selector */
+.box {
+    background-color: lightgray;
+}
+
+/* 3. ID Selector */
+#main {
+    border: 2px solid black;
+}
+
+/* 4. Group Selector */
+h1, h2 {
+    color: green;
+}
+
+/* 5. Universal Selector */
+* {
+    font-family: Arial;
+}
+
+/* 6. Descendant Selector */
+div p {
+    color: red;
+}
+
+/* 7. Child Selector */
+div > h3 {
+    color: purple;
+}
+
+/* 8. Adjacent Sibling Selector */
+h1 + p {
+    background-color: yellow;
+}
+
+/* 9. General Sibling Selector */
+h2 ~ p {
+    font-style: italic;
+}
+
+/* 10. Attribute Selector */
+input[type="text"] {
+    border: 2px solid blue;
+}
+
+/* 11. Hover Pseudo-class */
+button:hover {
+    background-color: orange;
+}
+
+/* 12. First-child Pseudo-class */
+li:first-child {
+    color: red;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Heading 1</h1>
+<p>This paragraph is affected by adjacent sibling selector</p>
+
+<h2>Heading 2</h2>
+<p>Paragraph 1 after h2</p>
+<p>Paragraph 2 after h2</p>
+
+<div id="main" class="box">
+    <h3>Child heading</h3>
+    <p>Paragraph inside div</p>
+</div>
+
+<input type="text" placeholder="Enter name">
+<br><br>
+
+<button>Hover me</button>
+
+<ul>
+    <li>First item</li>
+    <li>Second item</li>
+</ul>
+
+</body>
+</html>
