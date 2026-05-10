@@ -22,7 +22,7 @@ if (isset($_GET['logout'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cookie Example</title>
+    <title>Cookie example ..</title>
 </head>
 <body>
 
