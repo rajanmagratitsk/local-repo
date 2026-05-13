@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php } else { ?>
 
     <!-- DISPLAY SESSION -->
-    <h3>Welcome, <?php echo $_SESSION['user']; ?></h3>
+    <h3>Welcome bro, <?php echo $_SESSION['user']; ?></h3>
 
     <!-- LOGOUT -->
     <a href="?logout=true">Logout</a>
