@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Count Vowels</title>
+</head>
+<body>
+
+<h2>Count Vowels</h2>
+
+<script>
+    let text = "Education";
+    let count = 0;
+
+    text = text.toLowerCase();
+
+    for(let i = 0; i < text.length; i++) {
+
+        let ch = text[i];
+
+        if(ch === 'a' || ch === 'e' || ch === 'i' || ch === 'o' || ch === 'u') {
+            count++;
+        }
+    }
+
+    document.write("Number of vowels = " + count);
+</script>
+
+</body>
+</html>
